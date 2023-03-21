@@ -60,14 +60,35 @@ Once you run the tool after entering the prepared csv file with name, latitude a
 <br>
 
 ```diff
-# Set parameters
-work_dbs = arcpy.GetParameterAsText(0) # workspace
-title_name = arcpy.GetParameterAsText(1) # workspace
-trgt_csv = arcpy.GetParameterAsText(2) # target site csv, Table or Table view
-lat_field = arcpy.GetParameterAsText(3) # latitude field, target site csv
-long_field = arcpy.GetParameterAsText(4) # long field, target site csv
-buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default
-depart_time = arcpy.GetParameterAsText(6) # date & time
+# Create a Feature Dataset
+arcpy.management.CreateFeatureDataset(out_dataset_path = workspace, 
+                            out_name = title_name,
+                            spatial_reference = arcpy.SpatialReference("WGS 1984"))
+accessbility_fd = os.path.join(workspace, title_name)
+
+# Create unprojected feature layer for office sites
+market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
+arcpy.management.XYTableToPoint(
+    in_table = trgt_csv, 
+    out_feature_class = market_p, 
+    x_field = long_field, 
+    y_field = lat_field, 
+    coordinate_system = arcpy.SpatialReference("WGS 1984"))
+
+# Create Buffer
+buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
+arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
+
+# Create intersections between the buffer and major roads feature layer
+#major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\Streets"
+major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\MapMajorRoads\MapMajorRoads"
+start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")
+arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
+
+# Converted to signlepar tpoint by using the Multipart to Singlepart tool
+start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
+arcpy.MultipartToSinglepart_management(start_multi, start_p)
+arcpy.management.Delete(start_multi)
 ```
 <br>
 
