@@ -49,6 +49,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Details with scripts** <br>
 
+1. Set parameters
+Prepare data and enter the tool parameters as the above description.
+<br>
 ```diff
 # Set parameters
 work_dbs = arcpy.GetParameterAsText(0) # workspace
@@ -59,7 +62,20 @@ long_field = arcpy.GetParameterAsText(4) # long field, target site csv
 buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default
 depart_time = arcpy.GetParameterAsText(6) # date & time
 ```
+<br>
 
- 
+2. Create analysis objects
+```diff
+# Create a Feature Dataset
+arcpy.management.CreateFeatureDataset(out_dataset_path = workspace, 
+                            out_name = title_name,
+                            spatial_reference = arcpy.SpatialReference("WGS 1984"))
+accessbility_fd = os.path.join(workspace, title_name)
+```
+3. 
+4. dfadf
+5. 
+6. 
+
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
