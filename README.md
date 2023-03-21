@@ -14,6 +14,7 @@ creates buffers with user assgiend miles from the markets and starting points, w
 marekts and buffers. Also this tool creates routes and directions and allows users to customize departure time, 
 wihch will affect the drive time. After running this tool, it adds four feature layers, which were markets, starts,
 buffers and routes, to the current map in a project, and the markets and routes layers have statistics tables.
+
 <br><br>
 
 > **Updates** <br>
@@ -26,7 +27,6 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * Ver 2 | December 2022 <br>
    - [X] Created new fields for accessibility score and traffic decays
    - [X] Captured traffics by routes with closest spatial-join
-
 
 <br><br>
 
