@@ -45,6 +45,21 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * *Departure Time*
      - Second nested list item
 
+<br><br>
+
+> **Detailed Scripts** <br>
+
+```diff
+# Set parameters
+work_dbs = arcpy.GetParameterAsText(0) # workspace
+title_name = arcpy.GetParameterAsText(1) # workspace
+trgt_csv = arcpy.GetParameterAsText(2) # target site csv, Table or Table view
+lat_field = arcpy.GetParameterAsText(3) # latitude field, target site csv
+long_field = arcpy.GetParameterAsText(4) # long field, target site csv
+buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default
+depart_time = arcpy.GetParameterAsText(6) # date & time
+```
+
  
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
