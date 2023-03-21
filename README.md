@@ -18,8 +18,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Updates** <br>
 * March, 2023 <br>
-   - First nested list item
-[x] #739
+   - [x] #739
 - [ ] https://github.com/octo-org/octo-repo/issues/740
 - [ ] Add delight to the experience when all tasks are complete :tada:
 
