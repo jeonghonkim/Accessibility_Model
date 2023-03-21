@@ -14,4 +14,4 @@ wihch will affect the drive time. After running this tool, it adds four feature 
 buffers and routes, to the current map in a project, and the markets and routes layers have statistics tables.
 
 * Tool parameters
-
+![alt text](https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_parameters.JPG)
