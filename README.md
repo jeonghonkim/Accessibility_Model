@@ -19,13 +19,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Updates** <br>
 
-* Ver.3 | March 2023 <br>
+* Ver.3 &nbsp;|&nbsp; March 2023 <br>
    - [x] Created routes and directions with Closest Facility nax module, instead of na module[^1]
-   - [x] Added title name parameters to save outputs in different feature datasetrs
+   - [x] Added title name parameters to save outputs in different feature datasetrs[^2]
    - [X] Created new definitions to count number of turn right and left
    - [X] Added the outputs to the current map and rendered the layers
 
-* Ver.2 | December 2022 <br>
+* Ver.2 &nbsp;|&nbsp; December 2022 <br>
    - [X] Created new fields for accessibility score and traffic decays
    - [X] Captured traffics by routes with closest spatial-join
 
@@ -36,16 +36,15 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <img src="https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_parameters.JPG" width="400" height="500"> &nbsp; &nbsp; <img src="https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_examplecsv.JPG" width="300" height="500"> <br>
 
-* Workspace
-   - The current project's geodatabase is the default value.
-<br>
-* Title Name
-* Target Location CSV file
-* Latitude Field
-* Longitutde Field
-* Buffer Distance
-* Departure Time
+* *Workspace* &nbsp;|&nbsp; The current project's geodatabase is the default value
+* *Title Name* &nbsp;|&nbsp; There should be no space in this parameter because it will be the name of new feature dataset in the workspace. 
+* *Target CSV* &nbsp;|&nbsp; The csv should include three fields, which represent name, latitude value and logitude value for the target markets.
+* *Latitude Field* &nbsp;|&nbsp; You can select the latitude field in the entered csv file. 
+* *Longitutde Field* &nbsp;|&nbsp; You can select the longitude field in the entered csv file.
+* *Buffer Distance*
+* *Departure Time*
      - Second nested list item
+
  
- 
-[^1]:https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
