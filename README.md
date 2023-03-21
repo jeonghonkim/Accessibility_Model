@@ -17,9 +17,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br><br>
 
 > **Tool parameters** <br>
+<img src="https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_parameters.JPG" width="200" height="300">
+<img src="https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_examplecsv.JPG" width="200" height="300"> <br>
 
-![alt text](https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_parameters.JPG =250x250)
-![alt text](https://github.com/jeonghonkim/Accessibility_Model/blob/main/access_examplecsv.JPG =250x250) <br>
 * Workspace
 * Title Name
 * Target Location CSV file
