@@ -20,6 +20,8 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * Ver 3.1 | March, 2023 <br>
    - [x] Create routes and directions with Closest Facility nax module, instead of na module
    - [x] Add title name parameters to save outputs in different feature datasetrs
+   - [X ] Create definitions to count number of turn right and left
+   - [ ] 
 
 <br><br>
 
