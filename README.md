@@ -5,9 +5,13 @@
 <br />Completed as of March 21, 2023
 
 * Summary <br>
-This arcpy tool allows the user to calculate drive times, miles, number of turn right and left, traffic volumes
-decays from starting points in major roads in US with 0.25 miles distance to a target destination. It uses one 
-csv file, which has market name, latitude, and longitude, as an input. With the lat, long values, it locates
-site and major road points. Also this tool allows users to customize departure time and will create each routing 
-lines to destinations. The summarized final csv file will be created in the workfolder.
- 
+This arcpy tool allows users to calculate drive times, miles, number of turn right and left, traffic volumes
+decays from starting points in major roads or streets to target destinations. It uses one csv file, which includes 
+market name, latitude, and longitude fields, as an input. With the lat, long values, it locates market sites and 
+creates buffers with user assgiend miles from the markets and starting points, which were the intersections between 
+marekts and buffers. Also this tool creates routes and directions and allows users to customize departure time, 
+wihch will affect the drive time. After running this tool, it adds four feature layers, which were markets, starts,
+buffers and routes, to the current map in a project, and the markets and routes layers have statistics tables.
+
+* Step 1 | Input data - market csv
+
