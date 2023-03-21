@@ -17,10 +17,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br><br>
 
 > **Updates** <br>
-* March, 2023 <br>
-   - [x] #739
-- [ ] https://github.com/octo-org/octo-repo/issues/740
-- [ ] Add delight to the experience when all tasks are complete :tada:
+* Ver 3.1 | March, 2023 <br>
+   - [x] Create routes and directions with Closest Facility nax module, instead of na module
+   - [x] Add title name parameters to save outputs in different feature datasetrs
 
 <br><br>
 
