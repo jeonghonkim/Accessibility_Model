@@ -46,7 +46,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <br><br>
 
-> **Details with scripts** <br>
+> **Detailed Steps** <br>
 
 1. Set parameters
 Prepare data and enter the tool parameters as the above description.
