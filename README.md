@@ -47,7 +47,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <br><br>
 
-> **Detailed Scripts** <br>
+> **Details with scripts** <br>
 
 ```diff
 # Set parameters
