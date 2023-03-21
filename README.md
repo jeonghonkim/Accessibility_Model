@@ -41,9 +41,8 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * *Target CSV* &nbsp;|&nbsp; The csv should include three fields, which represent name, latitude value and logitude value for the target markets.
 * *Latitude Field* &nbsp;|&nbsp; You can select the latitude field in the entered csv file. 
 * *Longitutde Field* &nbsp;|&nbsp; You can select the longitude field in the entered csv file.
-* *Buffer Distance*
-* *Departure Time*
-     - Second nested list item
+* *Buffer Distance* &nbsp;|&nbsp; You can enter the mile-distance from market locations as you wish.
+* *Departure Time* &nbsp;|&nbsp; You can enter exact time will generate drive times. The currnet time will be applied if you select the clock symbol.
 
 <br><br>
 
@@ -65,6 +64,7 @@ depart_time = arcpy.GetParameterAsText(6) # date & time
 <br>
 
 2. Create analysis objects
+
 ```diff
 # Create a Feature Dataset
 arcpy.management.CreateFeatureDataset(out_dataset_path = workspace, 
