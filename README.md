@@ -23,7 +23,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
    - [x] Created routes and directions with Closest Facility nax module, instead of na module[^1]
    - [x] Added title name parameters to save outputs in different feature datasetrs[^2]
    - [X] Created new definitions to count number of turn right and left
-   - [X] Added the outputs to the current map and rendered the layers
+   - [X] Added the outputs to the current map and rendered the layers[^3]
 
 * Ver.2 &nbsp;|&nbsp; December 2022 <br>
    - [X] Created new fields for accessibility score and traffic decays
@@ -79,3 +79,4 @@ accessbility_fd = os.path.join(workspace, title_name)
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
+[^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
