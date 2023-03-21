@@ -17,11 +17,16 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br><br>
 
 > **Updates** <br>
-* Ver 3.1 | March, 2023 <br>
-   - [x] Create routes and directions with Closest Facility nax module, instead of na module
-   - [x] Add title name parameters to save outputs in different feature datasetrs
-   - [X ] Create definitions to count number of turn right and left
-   - [ ] 
+* Ver 3 | March 2023 <br>
+   - [x] Created routes and directions with Closest Facility nax module, instead of na module
+   - [x] Added title name parameters to save outputs in different feature datasetrs
+   - [X] Created new definitions to count number of turn right and left
+   - [X] Added the outputs to the current map and rendered the layers
+
+* Ver 2 | December 2022 <br>
+   - [X] Created new fields for accessibility score and traffic decays
+   - [X] Captured traffics by routes with closest spatial-join
+
 
 <br><br>
 
