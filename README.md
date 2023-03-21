@@ -29,6 +29,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
    - [X] Created new fields for accessibility score and traffic decays
    - [X] Captured traffics by routes with closest spatial-join
 
+* Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
+   - [X] Created a point feature layers with a csv file with lat, long values[^4]
+   - [X] Captured traffics by routes with closest spatial-join
+
+
 <br><br>
 
 
@@ -83,3 +88,4 @@ accessbility_fd = os.path.join(workspace, title_name)
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
+[^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
