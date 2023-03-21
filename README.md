@@ -1,7 +1,7 @@
 # Accessibility_Model
 
 `CBRE - Location Intelligence`
-<br />Accessibility Model Ver 3.1
+<br />Accessibility Model Ver.3
 <br />Completed as of March 21, 2023
 <br><br>
 
@@ -48,9 +48,12 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Detailed Steps** <br>
 
-1. Set parameters
-Prepare data and enter the tool parameters as the above description.
+1. Create analysis objects
+
+Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create three feature layers, which were Markets, Buffers, and Starts, in the feature datatset with project title name. Starting points are the intersection between the assigned street or roads layers and the buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or only for major roads.
+
 <br>
+
 ```diff
 # Set parameters
 work_dbs = arcpy.GetParameterAsText(0) # workspace
