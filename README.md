@@ -13,5 +13,5 @@ marekts and buffers. Also this tool creates routes and directions and allows use
 wihch will affect the drive time. After running this tool, it adds four feature layers, which were markets, starts,
 buffers and routes, to the current map in a project, and the markets and routes layers have statistics tables.
 
-* Step 1 | Input data - market csv
- 
+* Tool parameters
+
