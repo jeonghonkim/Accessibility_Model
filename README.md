@@ -51,62 +51,73 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <br><br>
 
-> **Detailed Steps** <br>
+> **Detailed Steps** <br><br>
 
 **1. Create analysis objects** <br>
 &nbsp;&nbsp;&nbsp;*1) Feature dataset*<br>
 &nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br>
-&nbsp;&nbsp;&nbsp;*2) Market locations and buffers*<br>
-&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
-&nbsp;&nbsp;&nbsp;*3) Starting road points*<br>
-&nbsp;&nbsp;&nbsp;Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br>
-&nbsp;&nbsp;&nbsp;*4) Multipart to single part*<br>
+&nbsp;&nbsp;&nbsp;*2) Markets and buffers and starting road points*<br>
+&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br>
+&nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br>
 
 <br>
 
-```diff
-# Set parameters
-work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
-title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
-trgt_csv = arcpy.GetParameterAsText(2) # target site csv, table or table view
-lat_field = arcpy.GetParameterAsText(3) # latitude field in target sv, field
-long_field = arcpy.GetParameterAsText(4) # long field in target csv, field
-buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default, linear unit
-depart_time = arcpy.GetParameterAsText(6) # date & time, date
+        # Set parameters
+        work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
+        title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
+        trgt_csv = arcpy.GetParameterAsText(2) # target site csv, table or table view
+        lat_field = arcpy.GetParameterAsText(3) # latitude field in target sv, field
+        long_field = arcpy.GetParameterAsText(4) # long field in target csv, field
+        buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default, linear unit
+        depart_time = arcpy.GetParameterAsText(6) # date & time, date
 
-# Define project, map, and workspace
-arcpy.env.workspace = work_dbs
-workspace = work_dbs
-aprx = arcpy.mp.ArcGISProject("CURRENT") # Current Project
-aprxMap = aprx.listMaps("Map")[0] # Dafault Map
-out_coordinate_system = arcpy.SpatialReference("WGS 1984")
+        # Define project, map, and workspace
+        arcpy.env.workspace = work_dbs
+        workspace = work_dbs
+        aprx = arcpy.mp.ArcGISProject("CURRENT") # Current Project
+        aprxMap = aprx.listMaps("Map")[0] # Dafault Map
+        out_coordinate_system = arcpy.SpatialReference("WGS 1984")
 
-# 1. Create analysis objects
-# 1) Feature Dataset
-arcpy.management.CreateFeatureDataset(workspace, title_name, arcpy.SpatialReference("WGS 1984"))
-accessbility_fd = os.path.join(workspace, title_name)
+        # 1. Create analysis objects
+        # 1) Feature Dataset
+        arcpy.management.CreateFeatureDataset(workspace, title_name, arcpy.SpatialReference("WGS 1984"))
+        accessbility_fd = os.path.join(workspace, title_name)
 
-# 2) Market locations and buffers
-market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
-arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, arcpy.SpatialReference("WGS 1984"))
-buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
-arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
+        # 2) Markets, buffers, and starting road points
+        # Markets
+        market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
+        arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, arcpy.SpatialReference("WGS 1984"))
+        # Buffers
+        buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
+        arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
+        # Starting road points
+        major_roads = "MapMajorRoads"
+        start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")        
+        arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
 
-# 3) Starting road points
-major_roads = r"MapMajorRoads"
-start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")
-arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
+        # 3) Multipart to singlepart
+        start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
+        arcpy.MultipartToSinglepart_management(start_multi, start_p)
+        arcpy.management.Delete(start_multi)
 
-# 4) Multipart to singlepart
-start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
-arcpy.MultipartToSinglepart_management(start_multi, start_p)
-arcpy.management.Delete(start_multi)
-
-```
 <br>
 
-in the feature datatset with project title name. 
+**2. Generate routes and directions** <br>
+&nbsp;&nbsp;&nbsp;*1) Use Closest-Facility nax module in Business Analysis extension*<br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. <br>
+
+        # Set NETWORKDATASET object variables
+        input_facilities = market_p
+        input_incidents = start_p
+        output_routes = os.path.join(accessbility_fd, title_name+"_Routes_Original")
+        output_directions = os.path.join(accessbility_fd, title_name+"_Directions")
+        
+        # Instantiate a ClosestFacility solver object using esri source - consume credits!
+        closest_facility = arcpy.nax.ClosestFacility("https://www.arcgis.com/")        
+        #arcpy.nax.MakeNetworkDatasetLayer(nds, nd_layer_name)
+        nd_travel_modes = arcpy.nax.GetTravelModes("https://www.arcgis.com/")
+        travel_mode = nd_travel_modes["Driving Time"]
 
 
 
