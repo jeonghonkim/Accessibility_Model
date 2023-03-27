@@ -54,9 +54,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
 > **Detailed Steps** <br>
 
 1. Create analysis objects
-   1) Create a feature dataset<br>
-   Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.
-
+   1) Feature dataset<br>
+   Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br>
+   2) Market locations and buffers<br>
+   Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
+   3) Starting road points<br>
+   Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
+   
 <br>
 
 ```diff
@@ -76,50 +80,37 @@ aprx = arcpy.mp.ArcGISProject("CURRENT") # Current Project
 aprxMap = aprx.listMaps("Map")[0] # Dafault Map
 out_coordinate_system = arcpy.SpatialReference("WGS 1984")
 
-# Create a Feature Dataset
+# 1. Create analysis objects
+# 1) Feature Dataset
 arcpy.management.CreateFeatureDataset(workspace, title_name, arcpy.SpatialReference("WGS 1984"))
 accessbility_fd = os.path.join(workspace, title_name)
-```
-<br>
 
-   2) Create market locations and buffers<br>
-   Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. 
-
-<br>
-
-```diff
-# Create unprojected feature layer for office sites
+# 2) Market locations and buffers
 market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
 arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, arcpy.SpatialReference("WGS 1984"))
-
-# Create Buffer
 buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
 arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
 
-# Create intersections between the buffer and major roads feature layer
+# 3) Starting road points
 #major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\Streets"
 major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\MapMajorRoads\MapMajorRoads"
 start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")
 arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
 
-# Converted to signlepar tpoint by using the Multipart to Singlepart tool
-start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
-arcpy.MultipartToSinglepart_management(start_multi, start_p)
-arcpy.management.Delete(start_multi)
+
 ```
 <br>
 
-2. Create analysis objects
 in the feature datatset with project title name. Starting points are the intersection between the assigned street or roads layers and the buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or only for major roads.
 
 
 
 ```diff
-# Create a Feature Dataset
-arcpy.management.CreateFeatureDataset(out_dataset_path = workspace, 
-                            out_name = title_name,
-                            spatial_reference = arcpy.SpatialReference("WGS 1984"))
-accessbility_fd = os.path.join(workspace, title_name)
+
+# Converted to signle-part point by using the Multipart to Singlepart tool
+start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
+arcpy.MultipartToSinglepart_management(start_multi, start_p)
+arcpy.management.Delete(start_multi)
 ```
 3. 
 4. dfadf
