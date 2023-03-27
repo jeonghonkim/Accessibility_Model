@@ -81,13 +81,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
         # 1. Create analysis objects
         # 1) Feature Dataset
-        arcpy.management.CreateFeatureDataset(workspace, title_name, arcpy.SpatialReference("WGS 1984"))
+        arcpy.management.CreateFeatureDataset(workspace, title_name, out_coordinate_system)
         accessbility_fd = os.path.join(workspace, title_name)
 
         # 2) Markets, buffers, and starting road points
         # Markets
         market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
-        arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, arcpy.SpatialReference("WGS 1984"))
+        arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, out_coordinate_system)
         # Buffers
         buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
         arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
@@ -104,7 +104,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br>
 
 **2. Generate routes and directions** <br>
-&nbsp;&nbsp;&nbsp;*1) Use Closest-Facility nax module in Business Analysis extension*<br>
+&nbsp;&nbsp;&nbsp;1) Use Closest-Facility nax module in Business Analysis extension<br>
 &nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. <br>
 
         # Set NETWORKDATASET object variables
@@ -115,19 +115,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
         
         # Instantiate a ClosestFacility solver object using esri source - consume credits!
         closest_facility = arcpy.nax.ClosestFacility("https://www.arcgis.com/")        
-        #arcpy.nax.MakeNetworkDatasetLayer(nds, nd_layer_name)
         nd_travel_modes = arcpy.nax.GetTravelModes("https://www.arcgis.com/")
         travel_mode = nd_travel_modes["Driving Time"]
 
 
-
-```diff
-
-# Converted to signle-part point by using the Multipart to Singlepart tool
-start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
-arcpy.MultipartToSinglepart_management(start_multi, start_p)
-arcpy.management.Delete(start_multi)
-```
 3. 
 4. dfadf
 5. 
