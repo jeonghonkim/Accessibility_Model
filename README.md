@@ -53,14 +53,16 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Detailed Steps** <br>
 
-1. Create analysis objects
-   1) Feature dataset<br>
-   Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br>
-   2) Market locations and buffers<br>
-   Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
-   3) Starting road points<br>
-   Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
-   
+**1. Create analysis objects** <br>
+&nbsp;&nbsp;&nbsp;*1) Feature dataset*<br>
+&nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br>
+&nbsp;&nbsp;&nbsp;*2) Market locations and buffers*<br>
+&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset.<br>
+&nbsp;&nbsp;&nbsp;*3) Starting road points*<br>
+&nbsp;&nbsp;&nbsp;Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br>
+&nbsp;&nbsp;&nbsp;*4) Multipart to single part*<br>
+&nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br>
+
 <br>
 
 ```diff
@@ -92,16 +94,19 @@ buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
 arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
 
 # 3) Starting road points
-#major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\Streets"
-major_roads = r"C:\ArcGIS\Business Analyst\US_2022\Data\Streets Data\NorthAmerica.gdb\MapMajorRoads\MapMajorRoads"
+major_roads = r"MapMajorRoads"
 start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")
 arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
 
+# 4) Multipart to singlepart
+start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
+arcpy.MultipartToSinglepart_management(start_multi, start_p)
+arcpy.management.Delete(start_multi)
 
 ```
 <br>
 
-in the feature datatset with project title name. Starting points are the intersection between the assigned street or roads layers and the buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or only for major roads.
+in the feature datatset with project title name. 
 
 
 
