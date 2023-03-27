@@ -51,17 +51,16 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <br><br>
 
-> **Detailed Steps** <br><br>
+> **Detailed Steps** <br>
 
-**1. Create analysis objects** <br>
+
+<br>**1. Create analysis objects** <br><br>
 &nbsp;&nbsp;&nbsp;*1) Feature dataset*<br>
-&nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br>
+&nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br><br>
 &nbsp;&nbsp;&nbsp;*2) Markets and buffers and starting road points*<br>
-&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br>
+&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br><br>
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
-&nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br>
-
-<br>
+&nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
         # Set parameters
         work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
@@ -103,9 +102,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 <br>
 
-**2. Generate routes and directions** <br>
+**2. Generate routes and directions** <br><br>
 &nbsp;&nbsp;&nbsp;1) Use Closest-Facility nax module in Business Analysis extension<br>
-&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. <br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. <br><br>
 
         # Set NETWORKDATASET object variables
         input_facilities = market_p
@@ -119,10 +118,6 @@ buffers and routes, to the current map in a project, and the markets and routes 
         travel_mode = nd_travel_modes["Driving Time"]
 
 
-3. 
-4. dfadf
-5. 
-6. 
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
