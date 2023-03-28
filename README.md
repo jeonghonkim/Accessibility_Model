@@ -58,7 +58,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*1) Feature dataset*<br>
 &nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br><br>
 &nbsp;&nbsp;&nbsp;*2) Markets and buffers and starting road points*<br>
-&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. Major roads are starting points in this analysis.<br><br>
+&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. All streets in US are used in this analysis.<br><br>
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
@@ -91,7 +91,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
         buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
         arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
         # Starting road points
-        major_roads = "MapMajorRoads"
+        major_roads = "Streets"
         start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")        
         arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
 
