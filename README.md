@@ -82,6 +82,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
+```ruby
     # Set parameters
     work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
     title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
@@ -119,7 +120,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
         start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
         arcpy.MultipartToSinglepart_management(start_multi, start_p)
         arcpy.management.Delete(start_multi)
-
+```
 <br>
 
 **2. Generate routes and directions** <br><br>
