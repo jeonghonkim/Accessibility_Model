@@ -82,12 +82,12 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
-        # Set parameters
-        work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
-        title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
-        trgt_csv = arcpy.GetParameterAsText(2) # target site csv, table or table view
-        lat_field = arcpy.GetParameterAsText(3) # latitude field in target sv, field
-        long_field = arcpy.GetParameterAsText(4) # long field in target csv, field
+     # Set parameters
+     work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
+     title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
+     trgt_csv = arcpy.GetParameterAsText(2) # target site csv, table or table view
+     lat_field = arcpy.GetParameterAsText(3) # latitude field in target sv, field
+     long_field = arcpy.GetParameterAsText(4) # long field in target csv, field
         buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default, linear unit
         depart_time = arcpy.GetParameterAsText(6) # date & time, date
 
