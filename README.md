@@ -123,11 +123,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br>
 
 **2. Generate routes and directions** <br><br>
-&nbsp;&nbsp;&nbsp;1) Use Closest-Facility nax module in Network Analysis<br>
-&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive.<br>
-&nbsp;&nbsp;&nbsp;The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset.
-
-<br><br>
+&nbsp;&nbsp;&nbsp;*1) Use Closest-Facility nax module in Network Analysis*<br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset.<br><br>
+&nbsp;&nbsp;&nbsp;*2) Filter the routes heading different markets*<br>
+&nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
         # 2. Generate routes and riections
         # 1) Use Closest-Facility nax module
@@ -169,7 +168,21 @@ buffers and routes, to the current map in a project, and the markets and routes 
         else:
             print("Solve failed")
             print(result.solverMessages(arcpy.nax.MessageSeverity.All))
-
+        
+        # 2) Filter the routes heading different markets
+        # Add fields and split 'Name' field with Markets(Facility) and Roads(Incident)
+        arcpy.AddField_management(output_routes, "Name_MarketID", "TEXT")
+        arcpy.AddField_management(output_routes, "Name_RoadID", "TEXT")
+        with arcpy.da.UpdateCursor(output_routes, ["Name", "Name_RoadID", "Name_MarketID"]) as cursor:
+            for row in cursor:
+                row[1] = row[0].split(" - ")[0]
+                row[2] = row[0].split(" - ")[1]
+                cursor.updateRow(row)
+        
+        # Select routes having same 'Name_RoadID' and 'Name_MarketID' to filter incidents falling into other markets
+        routes_selected = arcpy.management.SelectLayerByAttribute(output_routes, 'NEW_SELECTION', 'Name_RoadID = Name_MarketID')
+        routes_filtered = os.path.join(accessbility_fd, title_name+"_Routes_Filtered")
+        arcpy.management.CopyFeatures(routes_selected, routes_filtered)
 
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
