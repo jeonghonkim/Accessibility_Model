@@ -82,44 +82,28 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
-```ruby
-    # Set parameters
-    work_dbs = arcpy.GetParameterAsText(0) # workspace, current workspace
-    title_name = arcpy.GetParameterAsText(1) # project title / feature dataset name, String
-    trgt_csv = arcpy.GetParameterAsText(2) # target site csv, table or table view
-    lat_field = arcpy.GetParameterAsText(3) # latitude field in target sv, field
-    long_field = arcpy.GetParameterAsText(4) # long field in target csv, field
-    buff_dis = arcpy.GetParameterAsText(5) # "0.25 Miles" Default, linear unit
-    depart_time = arcpy.GetParameterAsText(6) # date & time, date
+```Ruby
+# 1. Create analysis objects
+# 1) Feature Dataset
+arcpy.management.CreateFeatureDataset(workspace, title_name, out_coordinate_system)
+accessbility_fd = os.path.join(workspace, title_name)
 
-        # Define project, map, and workspace
-        arcpy.env.workspace = work_dbs
-        workspace = work_dbs
-        aprx = arcpy.mp.ArcGISProject("CURRENT") # Current Project
-        aprxMap = aprx.listMaps("Map")[0] # Dafault Map
-        out_coordinate_system = arcpy.SpatialReference("WGS 1984")
+# 2) Markets, buffers, and starting road points
+# Markets
+market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
+arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, out_coordinate_system)
+# Buffers
+buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
+arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
+# Starting road points
+major_roads = "Streets"
+start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")        
+arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
 
-        # 1. Create analysis objects
-        # 1) Feature Dataset
-        arcpy.management.CreateFeatureDataset(workspace, title_name, out_coordinate_system)
-        accessbility_fd = os.path.join(workspace, title_name)
-
-        # 2) Markets, buffers, and starting road points
-        # Markets
-        market_p = os.path.join(accessbility_fd, title_name+"_Markets_Original")
-        arcpy.management.XYTableToPoint(trgt_csv, market_p, long_field, lat_field, out_coordinate_system)
-        # Buffers
-        buffer = os.path.join(accessbility_fd, title_name+"_Buffers")
-        arcpy.Buffer_analysis(market_p, buffer, buff_dis) 
-        # Starting road points
-        major_roads = "Streets"
-        start_multi = os.path.join(accessbility_fd, title_name+"_Start_Multi")        
-        arcpy.Intersect_analysis([buffer, major_roads], start_multi, "", "", "point")
-
-        # 3) Multipart to singlepart
-        start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
-        arcpy.MultipartToSinglepart_management(start_multi, start_p)
-        arcpy.management.Delete(start_multi)
+# 3) Multipart to singlepart
+start_p = os.path.join(accessbility_fd, title_name+"_AllStreets")
+arcpy.MultipartToSinglepart_management(start_multi, start_p)
+arcpy.management.Delete(start_multi)
 ```
 <br>
 
@@ -129,62 +113,63 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*2) Filter the routes heading different markets*<br>
 &nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
-        # 2. Generate routes and riections
-        # 1) Use Closest-Facility nax module
-        # Set NETWORKDATASET object variables
-        input_facilities = market_p
-        input_incidents = start_p
-        output_routes = os.path.join(accessbility_fd, title_name+"_Routes_Original")
-        output_directions = os.path.join(accessbility_fd, title_name+"_Directions")
+```Ruby
+# 2. Generate routes and riections
+# 1) Use Closest-Facility nax module
+# Set NETWORKDATASET object variables
+input_facilities = market_p
+input_incidents = start_p
+output_routes = os.path.join(accessbility_fd, title_name+"_Routes_Original")
+output_directions = os.path.join(accessbility_fd, title_name+"_Directions")
         
-        # Instantiate a ClosestFacility solver object using esri source - consume credits!
-        closest_facility = arcpy.nax.ClosestFacility("https://www.arcgis.com/")        
-        nd_travel_modes = arcpy.nax.GetTravelModes("https://www.arcgis.com/")
-        travel_mode = nd_travel_modes["Driving Time"]
+# Instantiate a ClosestFacility solver object using esri source - consume credits!
+closest_facility = arcpy.nax.ClosestFacility("https://www.arcgis.com/")        
+nd_travel_modes = arcpy.nax.GetTravelModes("https://www.arcgis.com/")
+travel_mode = nd_travel_modes["Driving Time"]
 
-        # Set ClosestFacility properties
-        closest_facility.travelMode = travel_mode
-        closest_facility.timeUnits = arcpy.nax.TimeUnits.Minutes
-        closest_facility.defaultTargetFacilityCount = 1
-        closest_facility.routeShapeType = arcpy.nax.RouteShapeType.TrueShapeWithMeasures
-        closest_facility.returnDirections = True
-        closest_facility.timeOfDay = datetime.datetime.strptime(depart_time, '%m/%d/%Y %I:%M:%S %p')
-        closest_facility.timeOfDayUsage = arcpy.nax.TimeOfDayUsage.DepartureTime
-        closest_facility.timeZone = arcpy.nax.TimeZoneUsage.UTC
-        closest_facility.travelDirection = arcpy.nax.TravelDirection.ToFacility
-        closest_facility.distanceUnits = arcpy.nax.DistanceUnits.Miles
-        closest_facility.directionsDistanceUnits = arcpy.nax.DistanceUnits.Miles
+# Set ClosestFacility properties
+closest_facility.travelMode = travel_mode
+closest_facility.timeUnits = arcpy.nax.TimeUnits.Minutes
+closest_facility.defaultTargetFacilityCount = 1
+closest_facility.routeShapeType = arcpy.nax.RouteShapeType.TrueShapeWithMeasures
+closest_facility.returnDirections = True
+closest_facility.timeOfDay = datetime.datetime.strptime(depart_time, '%m/%d/%Y %I:%M:%S %p')
+closest_facility.timeOfDayUsage = arcpy.nax.TimeOfDayUsage.DepartureTime
+closest_facility.timeZone = arcpy.nax.TimeZoneUsage.UTC
+closest_facility.travelDirection = arcpy.nax.TravelDirection.ToFacility
+closest_facility.distanceUnits = arcpy.nax.DistanceUnits.Miles
+closest_facility.directionsDistanceUnits = arcpy.nax.DistanceUnits.Miles
         
-        # Load Closest Facility inputs
-        closest_facility.load(arcpy.nax.ClosestFacilityInputDataType.Facilities, input_facilities)
-        closest_facility.load(arcpy.nax.ClosestFacilityInputDataType.Incidents, input_incidents)
+# Load Closest Facility inputs
+closest_facility.load(arcpy.nax.ClosestFacilityInputDataType.Facilities, input_facilities)
+closest_facility.load(arcpy.nax.ClosestFacilityInputDataType.Incidents, input_incidents)
         
-        # Solve the analysis
-        result = closest_facility.solve()
+# Solve the analysis
+result = closest_facility.solve()
         
-        # Export the routes and directions to feature classes
-        if result.solveSucceeded:
-            result.export(arcpy.nax.ClosestFacilityOutputDataType.Routes, output_routes)
-            result.export(arcpy.nax.ClosestFacilityOutputDataType.Directions, output_directions)
-        else:
-            print("Solve failed")
-            print(result.solverMessages(arcpy.nax.MessageSeverity.All))
+# Export the routes and directions to feature classes
+if result.solveSucceeded:
+    result.export(arcpy.nax.ClosestFacilityOutputDataType.Routes, output_routes)
+    result.export(arcpy.nax.ClosestFacilityOutputDataType.Directions, output_directions)
+else:
+    print("Solve failed")
+    print(result.solverMessages(arcpy.nax.MessageSeverity.All))
         
-        # 2) Filter the routes heading different markets
-        # Add fields and split 'Name' field with Markets(Facility) and Roads(Incident)
-        arcpy.AddField_management(output_routes, "Name_MarketID", "TEXT")
-        arcpy.AddField_management(output_routes, "Name_RoadID", "TEXT")
-        with arcpy.da.UpdateCursor(output_routes, ["Name", "Name_RoadID", "Name_MarketID"]) as cursor:
-            for row in cursor:
-                row[1] = row[0].split(" - ")[0]
-                row[2] = row[0].split(" - ")[1]
-                cursor.updateRow(row)
+# 2) Filter the routes heading different markets
+# Add fields and split 'Name' field with Markets(Facility) and Roads(Incident)
+arcpy.AddField_management(output_routes, "Name_MarketID", "TEXT")
+arcpy.AddField_management(output_routes, "Name_RoadID", "TEXT")
+with arcpy.da.UpdateCursor(output_routes, ["Name", "Name_RoadID", "Name_MarketID"]) as cursor:
+    for row in cursor:
+        row[1] = row[0].split(" - ")[0]
+        row[2] = row[0].split(" - ")[1]
+        cursor.updateRow(row)
         
-        # Select routes having same 'Name_RoadID' and 'Name_MarketID' to filter incidents falling into other markets
-        routes_selected = arcpy.management.SelectLayerByAttribute(output_routes, 'NEW_SELECTION', 'Name_RoadID = Name_MarketID')
-        routes_filtered = os.path.join(accessbility_fd, title_name+"_Routes_Filtered")
-        arcpy.management.CopyFeatures(routes_selected, routes_filtered)
-
+# Select routes having same 'Name_RoadID' and 'Name_MarketID' to filter incidents falling into other markets
+routes_selected = arcpy.management.SelectLayerByAttribute(output_routes, 'NEW_SELECTION', 'Name_RoadID = Name_MarketID')
+routes_filtered = os.path.join(accessbility_fd, title_name+"_Routes_Filtered")
+arcpy.management.CopyFeatures(routes_selected, routes_filtered)
+```
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
