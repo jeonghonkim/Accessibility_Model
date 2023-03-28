@@ -123,9 +123,14 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br>
 
 **2. Generate routes and directions** <br><br>
-&nbsp;&nbsp;&nbsp;1) Use Closest-Facility nax module in Business Analysis extension<br>
-&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. <br><br>
+&nbsp;&nbsp;&nbsp;1) Use Closest-Facility nax module in Network Analysis<br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive.<br>
+&nbsp;&nbsp;&nbsp;The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset.
 
+<br><br>
+
+        # 2. Generate routes and riections
+        # 1) Use Closest-Facility nax module
         # Set NETWORKDATASET object variables
         input_facilities = market_p
         input_incidents = start_p
