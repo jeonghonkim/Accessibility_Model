@@ -49,7 +49,15 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * *Buffer Distance* &nbsp;|&nbsp; You can enter the mile-distance from market locations as you wish.
 * *Departure Time* &nbsp;|&nbsp; You can enter exact time will generate drive times. The currnet time will be applied if you select the clock symbol.
 
+
 <br><br>
+
+
+> **Outputs** <br>
+
+
+<br><br>
+
 
 > **Detailed Steps** <br>
 
