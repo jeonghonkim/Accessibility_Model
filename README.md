@@ -186,7 +186,8 @@ buffers and routes, to the current map in a project, and the markets and routes 
     # Create 'Traffic Decays' field
     arcpy.AddField_management(routes_traffics, "Traffic_Decays", "DOUBLE")
     arcpy.management.CalculateField(routes_traffics, "Traffic_Decays", "!TRAFFIC1! / !Total_Minutes!", "PYTHON3")
-```Ruby
+```
+<br>
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
