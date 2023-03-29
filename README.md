@@ -82,7 +82,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
-```Ruby
+```python
     # 1. Create analysis objects
     # 1) Feature Dataset
     arcpy.management.CreateFeatureDataset(workspace, title_name, out_coordinate_system)
@@ -113,7 +113,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*2) Filter the routes heading different markets*<br>
 &nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
-```Ruby
+```python
     # 2. Generate routes and riections
     # 1) Use Closest-Facility nax module
     # Set NETWORKDATASET object variables
@@ -176,13 +176,15 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*1) Spatial join with closest traffics*<br>
 &nbsp;&nbsp;&nbsp;
 
-```Ruby
+```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
-    # Spatial join filtered routes with traffics
-    sl_traffics = r"C:\Users\jkim30\OneDrive - CBRE, Inc\Accessibility\Dev_Accessibility_2023\Dev_Accessibility_2023.gdb\StreetLight_Traffic"
+    # 1) Spatial join with closest traffics
+    sl_traffics = r"Traffics"
     routes_traffics = os.path.join(accessbility_fd, title_name+"_Routes_Traffics")
     arcpy.analysis.SpatialJoin(routes_filtered, sl_traffics, routes_traffics, "JOIN_ONE_TO_ONE", "KEEP_ALL", "", "CLOSEST_GEODESIC", "", "")
     arcpy.management.Delete(routes_filtered)
+    
+    # 2) Calculate traffic 
     # Create 'Traffic Decays' field
     arcpy.AddField_management(routes_traffics, "Traffic_Decays", "DOUBLE")
     arcpy.management.CalculateField(routes_traffics, "Traffic_Decays", "!TRAFFIC1! / !Total_Minutes!", "PYTHON3")
