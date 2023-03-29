@@ -184,10 +184,12 @@ buffers and routes, to the current map in a project, and the markets and routes 
     arcpy.analysis.SpatialJoin(routes_filtered, sl_traffics, routes_traffics, "JOIN_ONE_TO_ONE", "KEEP_ALL", "", "CLOSEST_GEODESIC", "", "")
     arcpy.management.Delete(routes_filtered)
     
-    # 2) Calculate traffic 
-    # Create 'Traffic Decays' field
+    # 2) Calculate traffics related fields
+    # Create 'Traffic Decays' and 'Traffic Scores'
     arcpy.AddField_management(routes_traffics, "Traffic_Decays", "DOUBLE")
+    arcpy.AddField_management(routes_traffics, "Traffic_Scores", "DOUBLE")
     arcpy.management.CalculateField(routes_traffics, "Traffic_Decays", "!TRAFFIC1! / !Total_Minutes!", "PYTHON3")
+    arcpy.management.CalculateField(routes_traffics, "Traffic_Scores", "(1 / !Total_Miles!) + (!TRAFFIC1! * 0.2)", "PYTHON3")
 ```
 <br>
 
