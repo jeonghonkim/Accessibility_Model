@@ -174,7 +174,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **3. Capture traffics** <br><br>
 &nbsp;&nbsp;&nbsp;*1) Spatial join with closest traffics*<br>
-&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; In order to mesaure the traffics of each routes, 
 
 ```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
