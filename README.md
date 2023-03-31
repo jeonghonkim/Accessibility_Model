@@ -173,13 +173,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br>
 
 **3. Capture traffics** <br><br>
-&nbsp;&nbsp;&nbsp;*1) Spatial join with closest traffics*<br>
-&nbsp;&nbsp;&nbsp; In order to mesaure the traffics of each routes, 
+&nbsp;&nbsp;&nbsp;*1) Spatial join with traffic points*<br>
+&nbsp;&nbsp;&nbsp; After filtering the routes, spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish. 
 
 ```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
-    # 1) Spatial join with closest traffics
-    sl_traffics = r"Traffics"
+    # 1) Spatial join with traffic points 
+    sl_traffics = "Traffics"
     routes_traffics = os.path.join(accessbility_fd, title_name+"_Routes_Traffics")
     arcpy.analysis.SpatialJoin(routes_filtered, sl_traffics, routes_traffics, "JOIN_ONE_TO_ONE", "KEEP_ALL", "", "CLOSEST_GEODESIC", "", "")
     arcpy.management.Delete(routes_filtered)
