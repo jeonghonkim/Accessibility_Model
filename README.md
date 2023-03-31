@@ -179,7 +179,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*2) Calculate traffic fields*<br>
 &nbsp;&nbsp;&nbsp; The capcuated traffics can be normalized with the following two calculations, which are 'Traffic Decays' and 'Traffic Scores'. <br>
 * **Traffic Decays**&nbsp;&nbsp;|&nbsp;&nbsp;Closest Traffics / Drive Times<br> This value is the number of traffics divided by drive times. Higher values represents that there are more traffics in the route with the same amount of drive time. Higher traffic decays can be interpreted as less accessibility in this model.
-* **Traffic Scores**&nbsp;&nbsp;|&nbsp;&nbsp;(1 / Drive Miles) + (Closest Traffics * α)<br> Traffic scores can be achieved with drive miles and closest traffics. The values can be used in the cases that higher traffics are positive signals.
+* **Traffic Scores**&nbsp;&nbsp;|&nbsp;&nbsp;(1 / Drive Miles) + (Closest Traffics * α)<br> Traffic scores can be achieved with drive miles and closest traffics. The values can be used in the cases that higher traffics are positive signals. In this analysis, 0.2 is used for the α value, but you can increase the value, such as 0.5  or 0.7, if the impact of the traffics is more forceful.
 <br><br>
 
 ```python
