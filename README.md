@@ -178,10 +178,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 &nbsp;&nbsp;&nbsp;*2) Calculate traffic fields*<br>
 &nbsp;&nbsp;&nbsp; The capcuated traffics can be normalized with the following two calculations, which are 'Traffic Decays' and 'Traffic Scores'. <br>
-* Traffic Decays: This value is the number of traffics divided by drive times. Higher values represents that there are more traffics in the route with the same amount of drive time. Higher traffic decays can be interpreted as less accessibility in this model.
-* Traffic Scores
-> <br>
-spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish. <br><br>
+* **Traffic Decays**&nbsp;&nbsp;|&nbsp;&nbsp;Closest Traffics / Drive Times<br> This value is the number of traffics divided by drive times. Higher values represents that there are more traffics in the route with the same amount of drive time. Higher traffic decays can be interpreted as less accessibility in this model.
+* **Traffic Scores**&nbsp;&nbsp;|&nbsp;&nbsp;(1 / Drive Miles) + (Closest Traffics * α)<br> Traffic scores can be achieved with drive miles and closest traffics. The values can be used in the cases that higher traffics are positive signals.
+<br><br>
 
 ```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
