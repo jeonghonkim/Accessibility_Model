@@ -176,6 +176,14 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*1) Spatial join with traffic points*<br>
 &nbsp;&nbsp;&nbsp; After filtering the routes, spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish. 
 
+&nbsp;&nbsp;&nbsp;*2) Calculate traffic fields*<br>
+&nbsp;&nbsp;&nbsp; The capcuated traffics can be normalized with the following two calculations, which are 'Traffic Decays' and 'Traffic Scores'. <br>
+* Traffic Decays: This value is the number of traffics divided by drive times. Higher values represents that there are more traffics in the route with the same amount of drive time. Higher traffic decays can be interpreted as less accessibility in this model.
+
+* Traffic Scores
+> <br>
+spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish. <br><br>
+
 ```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
     # 1) Spatial join with traffic points 
@@ -184,7 +192,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
     arcpy.analysis.SpatialJoin(routes_filtered, sl_traffics, routes_traffics, "JOIN_ONE_TO_ONE", "KEEP_ALL", "", "CLOSEST_GEODESIC", "", "")
     arcpy.management.Delete(routes_filtered)
     
-    # 2) Calculate traffics related fields
+    # 2) Calculate traffics fields
     # Create 'Traffic Decays' and 'Traffic Scores'
     arcpy.AddField_management(routes_traffics, "Traffic_Decays", "DOUBLE")
     arcpy.AddField_management(routes_traffics, "Traffic_Scores", "DOUBLE")
