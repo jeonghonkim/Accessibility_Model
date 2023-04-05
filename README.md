@@ -199,6 +199,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
 ```
 <br>
 
+**5. Calculate number of turns by routes ** <br><br>
+&nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
+
+
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
