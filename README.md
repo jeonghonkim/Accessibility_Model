@@ -199,7 +199,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 ```
 <br>
 
-**5. Calculate number of turns by routes ** <br><br>
+**5. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
 
 
