@@ -199,8 +199,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
 ```
 <br>
 
-**5. Calculate number of turns by routes**<br><br>
+**4. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
+
+&nbsp;&nbsp;&nbsp;*2) Create functions to count turns*<br>
 
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
