@@ -129,9 +129,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
     # Set ClosestFacility properties
     closest_facility.travelMode = travel_mode
-   closest_facility.timeUnits = arcpy.nax.TimeUnits.Minutes
+    closest_facility.timeUnits = arcpy.nax.TimeUnits.Minutes
     closest_facility.defaultTargetFacilityCount = 1
-   closest_facility.routeShapeType = arcpy.nax.RouteShapeType.TrueShapeWithMeasures
+    closest_facility.routeShapeType = arcpy.nax.RouteShapeType.TrueShapeWithMeasures
     closest_facility.returnDirections = True
     closest_facility.timeOfDay = datetime.datetime.strptime(depart_time, '%m/%d/%Y %I:%M:%S %p')
     closest_facility.timeOfDayUsage = arcpy.nax.TimeOfDayUsage.DepartureTime
