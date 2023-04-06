@@ -204,6 +204,112 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns*<br>
 
+<br><br>
+
+```python
+    # Convert feature layer to table
+    arcpy.TableToTable_conversion(routes_traffics, workspace, title_name+"_RoutesTraf_Table")
+    arcpy.TableToTable_conversion(output_directions, workspace, title_name+"_Directions_Table")
+    
+    # Convert gdb table to dataframe in pandas
+    routesTraf_table = os.path.join(workspace, title_name+"_RoutesTraf_Table")
+    routesTraf_field = [f.name for f in arcpy.ListFields(routesTraf_table)]
+    routesTraf_array = arcpy.da.TableToNumPyArray(routesTraf_table, routesTraf_field)
+    routesTraf_df = pd.DataFrame(routesTraf_array, columns = routesTraf_field)
+    
+    directions_table = os.path.join(workspace, title_name+"_Directions_Table")
+    directions_field = [f.name for f in arcpy.ListFields(directions_table)]
+    directions_array = arcpy.da.TableToNumPyArray(directions_table, directions_field)
+    directions_df = pd.DataFrame(directions_array, columns = directions_field)
+    
+    # Create 'Route ID' in directions_df
+    # Convert 'Type' column to string
+    directions_df['Type'] = directions_df['Type'].astype(str)
+    
+    # Create definition to create 'Route ID'
+    def route_id(row):
+        if '18' in row['Type']:
+            val = 1
+        else:
+            val = 0
+        return val
+    directions_df['Route_ID'] = directions_df.apply(route_id, axis=1)
+    directions_df['Route_ID'] = directions_df['Route_ID'].cumsum()
+    
+    # Filter the direction with 'Route ID'
+    route_filtered_id = routesTraf_df['IncidentOID'].values.tolist()
+    directions_filtered_df = directions_df[directions_df["Route_ID"].isin(route_filtered_id)] # 1953 / 2156
+    
+    # Create 'Turn Right' and 'Turn Left' in directions_df
+    # Create definition to create the columns
+    def turn_left1(row):
+        if 'turn left' in row['Text']:
+            val = 1
+        elif 'Turn left' in row['Text']:
+            val = 1
+        elif 'sharp left' in row['Text']:
+            val = 1
+        elif 'Bear left' in row['Text']:
+            val = 1
+        elif 'bear left' in row['Text']:
+            val = 1
+        else:
+            val = 0
+        return val
+    
+    def turn_left2(row):
+        if 'U-turn' in row['Text']:
+            val = 2
+        elif 'Turn left, then turn left' in row['Text']:
+            val = 2
+        else:
+            val = row['Turn_Left']
+        return val
+    
+    def turn_right1(row):
+        if 'turn right' in row['Text']:
+            val = 1
+        elif 'Turn right' in row['Text']:
+            val = 1
+        elif 'sharp right' in row['Text']:
+            val = 1
+        elif 'Bear right' in row['Text']:
+            val = 1
+        elif 'bear right' in row['Text']:
+            val = 1
+        else:
+            val = 0
+        return val
+    
+    def turn_right2(row):
+        if 'Turn right, then turn right' in row['Text']:
+            val = 2
+        else:
+            val = row['Turn_Right']
+        return val
+    
+    directions_df['Turn_Left'] = directions_df.apply(turn_left1, axis=1)
+    directions_df['Turn_Left'] = directions_df.apply(turn_left2, axis=1)
+    directions_df['Turn_Right'] = directions_df.apply(turn_right1, axis=1)
+    directions_df['Turn_Right'] = directions_df.apply(turn_right2, axis=1)
+    
+    # Create a df with number of turn right and left by route id
+    summary_fields = ['Turn_Left', 'Turn_Right']
+    routesTurn_df = directions_df.groupby(['Route_ID'], as_index=False)[summary_fields].sum()
+    
+    # Convert df to gdb table
+    routesTurn_records = routesTurn_df.to_records(index=False)
+    routesTurn_array = np.array(routesTurn_records, dtype = routesTurn_records.dtype.descr)
+    routesTurn_table = os.path.join(workspace, title_name+"_RoutesTurn_Table")
+    arcpy.da.NumPyArrayToTable(routesTurn_array, routesTurn_table)
+    
+    # Join turn table to feature layer
+    # Add index to 'Routes_Traffics'
+    route_joined_fc = arcpy.management.AddJoin(routes_traffics, "IncidentOID", routesTurn_table, "Route_ID", "KEEP_COMMON")
+    routes_traffics_turns = os.path.join(accessbility_fd, title_name+"_Routes_TrafficsTurns")
+    arcpy.management.CopyFeatures(route_joined_fc, routes_traffics_turns)
+```
+<br>
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
