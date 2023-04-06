@@ -202,16 +202,20 @@ buffers and routes, to the current map in a project, and the markets and routes 
 **4. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
 
-&nbsp;&nbsp;&nbsp;*2) Create functions to count turns*<br>
+&nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
+
+&nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class <br>
 
 <br><br>
 
 ```python
-    # Convert feature layer to table
+    # 4. Calculate number of turn by routes
+    # 1) Convert feature tables to dataframes in pandas
+    # Convert feature tables to gdb tables in workspace
     arcpy.TableToTable_conversion(routes_traffics, workspace, title_name+"_RoutesTraf_Table")
     arcpy.TableToTable_conversion(output_directions, workspace, title_name+"_Directions_Table")
     
-    # Convert gdb table to dataframe in pandas
+    # Convert route and direction tables to dataframes in pandas
     routesTraf_table = os.path.join(workspace, title_name+"_RoutesTraf_Table")
     routesTraf_field = [f.name for f in arcpy.ListFields(routesTraf_table)]
     routesTraf_array = arcpy.da.TableToNumPyArray(routesTraf_table, routesTraf_field)
@@ -222,13 +226,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
     directions_array = arcpy.da.TableToNumPyArray(directions_table, directions_field)
     directions_df = pd.DataFrame(directions_array, columns = directions_field)
     
-    # Create 'Route ID' in directions_df
+    # 2) Create funtions to count numer of turns by each route
     # Convert 'Type' column to string
     directions_df['Type'] = directions_df['Type'].astype(str)
     
-    # Create definition to create 'Route ID'
+    # Create definition to create 'Route ID' 
     def route_id(row):
-        if '18' in row['Type']:
+        if '18' in row['Type']: # type '18' indicates start of each route
             val = 1
         else:
             val = 0
@@ -304,7 +308,6 @@ buffers and routes, to the current map in a project, and the markets and routes 
     arcpy.da.NumPyArrayToTable(routesTurn_array, routesTurn_table)
     
     # Join turn table to feature layer
-    # Add index to 'Routes_Traffics'
     route_joined_fc = arcpy.management.AddJoin(routes_traffics, "IncidentOID", routesTurn_table, "Route_ID", "KEEP_COMMON")
     routes_traffics_turns = os.path.join(accessbility_fd, title_name+"_Routes_TrafficsTurns")
     arcpy.management.CopyFeatures(route_joined_fc, routes_traffics_turns)
