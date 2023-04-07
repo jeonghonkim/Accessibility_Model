@@ -19,7 +19,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 > **Updates** <br>
 
 * Ver.3 &nbsp;|&nbsp; March 2023 <br>
-   - [x] Created routes and directions with Closest Facility nax module, instead of na module[^1]
+   - [x] Created directions with Closest Facility nax module, instead of na module[^1]
    - [x] Added title name parameters to save outputs in different feature datasets[^2]
    - [X] Created new definitions to count number of turn right and left
    - [X] Added the outputs to the current map and rendered the layers[^3]
@@ -30,7 +30,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 * Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
    - [X] Created a point feature layers with a csv file with lat, long values[^4]
-   - [X] Used nax module to create routes and directions[^5]
+   - [X] Created routes with ClosestFacility in na module[^5]
    - [X] Captured traffics by routes with closest spatial-join
 
 
@@ -109,7 +109,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **2. Generate routes and directions** <br><br>
 &nbsp;&nbsp;&nbsp;*1) Use Closest-Facility nax module in Network Analysis*<br>
-&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset. Although nax moudle is much faster than na, please reference the following Esri's article showing differences between na and nax modules as well as the cases you need na module.[^5]<br><br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset. Although nax moudle is much faster than na, please reference the following Esri's article showing differences between na and nax modules as well as the cases you need na module.[^6]<br><br>
 &nbsp;&nbsp;&nbsp;*2) Filter the routes heading different markets*<br>
 &nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
@@ -201,7 +201,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **4. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
-&nbsp;&nbsp;&nbsp; Theare are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^6] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^7]. 
+&nbsp;&nbsp;&nbsp; Theare are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^7] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^8]. 
 
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
 
@@ -317,7 +317,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
-[^5]: 
-[^5]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
-[^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
-[^7]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
+[^5]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-closest-facility-analysis-layer.htm
+[^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
+[^7]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
+[^8]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
