@@ -113,7 +113,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
 ```python
-    # 2. Generate routes and riections
+    # 2. Generate routes and directions
     # 1) Use Closest-Facility nax module
     # Set NETWORKDATASET object variables
     input_facilities = market_p
@@ -200,10 +200,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **4. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
+&nbsp;&nbsp;&nbsp; Theare are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^6] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^7]. 
 
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
 
-&nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class <br>
+&nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class*<br>
 
 <br><br>
 
@@ -225,11 +226,9 @@ buffers and routes, to the current map in a project, and the markets and routes 
     directions_array = arcpy.da.TableToNumPyArray(directions_table, directions_field)
     directions_df = pd.DataFrame(directions_array, columns = directions_field)
     
-    # 2) Create funtions to count numer of turns by each route
-    # Convert 'Type' column to string
+    # 2) Create funtions to count number of turns by each routes
+    # Create 'Route_ID' column
     directions_df['Type'] = directions_df['Type'].astype(str)
-    
-    # Create definition to create 'Route ID' 
     def route_id(row):
         if '18' in row['Type']: # type '18' indicates start of each route
             val = 1
@@ -241,7 +240,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
     
     # Filter the direction with 'Route ID'
     route_filtered_id = routesTraf_df['IncidentOID'].values.tolist()
-    directions_filtered_df = directions_df[directions_df["Route_ID"].isin(route_filtered_id)] # 1953 / 2156
+    directions_filtered_df = directions_df[directions_df["Route_ID"].isin(route_filtered_id)]
     
     # Create 'Turn Right' and 'Turn Left' in directions_df
     # Create definition to create the columns
@@ -318,3 +317,5 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
 [^5]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
+[^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
+[^7]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
