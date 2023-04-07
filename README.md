@@ -201,7 +201,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*1) Convert feature class table to datframe in pandas*<br>
 &nbsp;&nbsp;&nbsp; There are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^7] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^8].<br><br>
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
-&nbsp;&nbsp;&nbsp; 
+<br>
 &nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class*<br>
 
 <br><br>
