@@ -78,7 +78,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp;*1) Feature dataset*<br>
 &nbsp;&nbsp;&nbsp;Creating a feature dataset has multiple benefits. First, you can run the analysis multiple times with different feature names. Also, you can easily find the feature analysis outcomes in different feature dataset. The project title name you enter would be the feature datasetanme.<br><br>
 &nbsp;&nbsp;&nbsp;*2) Markets and buffers and starting road points*<br>
-&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. All streets in US are used in this analysis.<br><br>
+&nbsp;&nbsp;&nbsp;Once you run the tool after entering the prepared csv file with name, latitude and longitude as well as the buffer-mile distance, it will create market locations as well as buffers feature layers. They will be saved in the generated feature dataset. Starting points are the intersection between the assigned street or roads layers and the generated buffers. You can change the 'major_roads' path in the code as you wish, such as all streets or major roads. All streets in US are used in this analysis.<br>
 &nbsp;&nbsp;&nbsp;*3) Multipart to single part*<br>
 &nbsp;&nbsp;&nbsp;The generated starting points can be a multipart feature point layer. In order to make all points as unique starts, use the multipart to single part geoprocessing tool.<br><br>
 
@@ -109,7 +109,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **2. Generate routes and directions** <br><br>
 &nbsp;&nbsp;&nbsp;*1) Use Closest-Facility nax module in Network Analysis*<br>
-&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset. Although nax moudle is much faster than na, please reference the following Esri's article showing differences between na and nax modules as well as the cases you need na module.[^6]<br><br>
+&nbsp;&nbsp;&nbsp;Creating a closest-facility layer with nax module to get routes and directions from starting points to markets. This tool's network datasource is ArcGIS Online, which means that it will consume credits if you run this tool. You can use this tool without credit consumption if you have your own network dataset and change the datapath to the nds in your local drive. The analysis outcomes include drive time in minutes and drive distances in miles. Also the drive times is calculated by the entered time as a departure time. Because the nax module is used in this analysis, the desired output features, which were routes and directions, in the CloesestFacility objects are exported to the created feature dataset. Although nax moudle is much faster than na, please reference the following Esri's article showing differences between na and nax modules as well as the cases you need na module.[^6]<br>
 &nbsp;&nbsp;&nbsp;*2) Filter the routes heading different markets*<br>
 &nbsp;&nbsp;&nbsp;Since this tool's one of the most significant purpose is calculating accessibility of many differnt markets 'at once', it use Closest-Facility to meausre the values. However, if some of markets locate closely each other, interruptions might happnes. For example, some starting points generated at Market-1 can heads to different markets. Most of the cases happen when the points locate in highways or roads without u-turn. By filtering feature with different market-name and route-name, those outliers can be removed.<br><br>
 
@@ -174,13 +174,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **3. Capture traffics** <br><br>
 &nbsp;&nbsp;&nbsp;*1) Spatial join with traffic points*<br>
-&nbsp;&nbsp;&nbsp; After filtering the routes, spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish. 
-
+&nbsp;&nbsp;&nbsp; After filtering the routes, spatial-join is used to mesaure the closest traffics of each routes. Many different ways have been developed to capture traffic counts. For example, street polygons can be used to capture the traffics within 1 mile (You can see in the detailed scripts in the above list). Also, you can develop and customize this part as you wish.<br>
 &nbsp;&nbsp;&nbsp;*2) Calculate traffic fields*<br>
 &nbsp;&nbsp;&nbsp; The capcuated traffics can be normalized with the following two calculations, which are 'Traffic Decays' and 'Traffic Scores'. <br>
 * **Traffic Decays**&nbsp;&nbsp;|&nbsp;&nbsp;Closest Traffics / Drive Times<br> This value is the number of traffics divided by drive times. Higher values represents that there are more traffics in the route with the same amount of drive time. Higher traffic decays can be interpreted as less accessibility in this model.
-* **Traffic Scores**&nbsp;&nbsp;|&nbsp;&nbsp;(1 / Drive Miles) + (Closest Traffics * α)<br> Traffic scores can be achieved with drive miles and closest traffics. The values can be used in the cases that higher traffics are positive signals. In this analysis, 0.2 is used for the α value, but you can increase the value, such as 0.5  or 0.7, if the impact of the traffics is more forceful.
-<br><br>
+* **Traffic Scores**&nbsp;&nbsp;|&nbsp;&nbsp;(1 / Drive Miles) + (Closest Traffics * α)<br> Traffic scores can be achieved with drive miles and closest traffics. The values can be used in the cases that higher traffics are positive signals. In this analysis, 0.2 is used for the α value, but you can increase the value, such as 0.5  or 0.7, if the impact of the traffics is more forceful.<br><br>
 
 ```python
     # 3. Capture cloesest traffics and calculate traffic decays (traffics devided by drive times) by routes
@@ -200,18 +198,17 @@ buffers and routes, to the current map in a project, and the markets and routes 
 <br>
 
 **4. Calculate number of turns by routes**<br><br>
-&nbsp;&nbsp;&nbsp;*1) Convert feature table to datframe in pandas*<br>
-&nbsp;&nbsp;&nbsp; Theare are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^7] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^8]. 
-
+&nbsp;&nbsp;&nbsp;*1) Convert feature class table to datframe in pandas*<br>
+&nbsp;&nbsp;&nbsp; There are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^7] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^8].<br>
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
-
+&nbsp;&nbsp;&nbsp; 
 &nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class*<br>
 
 <br><br>
 
 ```python
     # 4. Calculate number of turn by routes
-    # 1) Convert feature tables to dataframes in pandas
+    # 1) Convert feature class table to datframe in pandas
     # Convert feature tables to gdb tables in workspace
     arcpy.TableToTable_conversion(routes_traffics, workspace, title_name+"_RoutesTraf_Table")
     arcpy.TableToTable_conversion(output_directions, workspace, title_name+"_Directions_Table")
@@ -227,8 +224,8 @@ buffers and routes, to the current map in a project, and the markets and routes 
     directions_array = arcpy.da.TableToNumPyArray(directions_table, directions_field)
     directions_df = pd.DataFrame(directions_array, columns = directions_field)
     
-    # 2) Create funtions to count number of turns by each routes
-    # Create 'Route_ID' column
+    # 2) Create functions to count turns by each route
+    # Create 'Route ID' column
     directions_df['Type'] = directions_df['Type'].astype(str)
     def route_id(row):
         if '18' in row['Type']: # type '18' indicates start of each route
@@ -239,11 +236,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
     directions_df['Route_ID'] = directions_df.apply(route_id, axis=1)
     directions_df['Route_ID'] = directions_df['Route_ID'].cumsum()
     
-    # Filter the direction with 'Route ID'
+    # Filter directions with 'Route ID'
     route_filtered_id = routesTraf_df['IncidentOID'].values.tolist()
     directions_filtered_df = directions_df[directions_df["Route_ID"].isin(route_filtered_id)]
     
-    # Create 'Turn Right' and 'Turn Left' in directions_df
+    # Create 'Turn Right' and 'Turn Left' columns in direction dataframe
     # Create definition to create the columns
     def turn_left1(row):
         if 'turn left' in row['Text']:
@@ -296,17 +293,17 @@ buffers and routes, to the current map in a project, and the markets and routes 
     directions_df['Turn_Right'] = directions_df.apply(turn_right1, axis=1)
     directions_df['Turn_Right'] = directions_df.apply(turn_right2, axis=1)
     
-    # Create a df with number of turn right and left by route id
+    # Create a summary dataframe of turns by 'Route ID'
     summary_fields = ['Turn_Left', 'Turn_Right']
     routesTurn_df = directions_df.groupby(['Route_ID'], as_index=False)[summary_fields].sum()
     
-    # Convert df to gdb table
+    # Convert dataframe to gdb table
     routesTurn_records = routesTurn_df.to_records(index=False)
     routesTurn_array = np.array(routesTurn_records, dtype = routesTurn_records.dtype.descr)
     routesTurn_table = os.path.join(workspace, title_name+"_RoutesTurn_Table")
     arcpy.da.NumPyArrayToTable(routesTurn_array, routesTurn_table)
     
-    # Join turn table to feature layer
+    # Join gdb table to feature class
     route_joined_fc = arcpy.management.AddJoin(routes_traffics, "IncidentOID", routesTurn_table, "Route_ID", "KEEP_COMMON")
     routes_traffics_turns = os.path.join(accessbility_fd, title_name+"_Routes_TrafficsTurns")
     arcpy.management.CopyFeatures(route_joined_fc, routes_traffics_turns)
