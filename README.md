@@ -20,7 +20,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 * Ver.3 &nbsp;|&nbsp; March 2023 <br>
    - [x] Created routes and directions with Closest Facility nax module, instead of na module[^1]
-   - [x] Added title name parameters to save outputs in different feature datasetrs[^2]
+   - [x] Added title name parameters to save outputs in different feature datasets[^2]
    - [X] Created new definitions to count number of turn right and left
    - [X] Added the outputs to the current map and rendered the layers[^3]
 
@@ -30,6 +30,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 * Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
    - [X] Created a point feature layers with a csv file with lat, long values[^4]
+   - [X] Used nax module to create routes and directions[^5]
    - [X] Captured traffics by routes with closest spatial-join
 
 
@@ -316,6 +317,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
+[^5]: 
 [^5]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
 [^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
 [^7]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
