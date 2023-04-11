@@ -31,9 +31,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 * Ver.3 &nbsp;|&nbsp; March 2023 <br>
    - [x] Added title name parameters to save outputs in different feature datasets[^8]
-   - [x] Created directions with Closest Facility nax module, instead of na module[^]
+   - [x] Created directions with Closest Facility nax module, instead of na module[^9]
    - [X] Created new definitions to count number of turn right and left
-   - [X] Added the outputs to the current map and rendered the layers[^]
+   - [X] Added the outputs to the current map
+   - [X] rendered imported feature layers[^]
 
 <br><br>
 
@@ -352,10 +353,10 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^5]: https://pro.arcgis.com/en/pro-app/2.8/arcpy/functions/addmessage.htm
 [^6]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/spatial-join.htm
 [^7]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/add-fields.htm
-
 [^8]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
-[^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
+[^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+
 [^10]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
-[^11]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^11]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^12]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
 [^13]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
