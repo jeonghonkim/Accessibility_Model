@@ -204,9 +204,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 &nbsp;&nbsp;&nbsp; The number of turn right and left can be calculated from the directino dataframe. Since directinot dataframe does not have a route id column, it needs to be created. Although it can be achieved by many different ways, we are going to use Type column in this analysis. The direction table's order is organized by the route id and 18 indicates the start of each route. By using the features, we can get incremental values in the route id column. <br>
 &nbsp;&nbsp;&nbsp; Once we differentiate route ids, functions to count turn right and left need to be created. There are three types of sentences indicating turns in the direction dataframe, which were 'turn left/right', 'bear left/right', and 'sharp left/right'. The first two types need to be differentiated by upper and lower characeters since they can be located in the start of the sentence. Also, there are sentences indicating turn two times. For the left turn, there are two types, which are 'U-turn' and 'Turn left, then turn left'. There is only one type for the right, which is 'Turn right, then turn right'. You can achieve 2 turns without interruptions by covering if you use the 2 turns fuctions after you apply the 1 turn function.<br><br>
 &nbsp;&nbsp;&nbsp;*3) Convert df to table & join it to feature class*<br>
-&nbsp;&nbsp;&nbsp; A summary dataframe of nubmers of turn right and left can be created from the above fuctions. Once it is created, the dataframe can be converted into a table in geodatabase in Arcgis Pro with the reverse way, 'NumPyArrayToTable'. It can be joined with the routes feature class with the route id.
-
-<br><br>
+&nbsp;&nbsp;&nbsp; A summary dataframe of nubmers of turn right and left can be created from the above fuctions. Once it is created, the dataframe can be converted into a table in geodatabase in Arcgis Pro with the reverse way, 'NumPyArrayToTable'. It can be joined with the routes feature class with the route id. <br><br>
 
 ```python
     # 4. Calculate number of turn by routes
@@ -310,6 +308,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
     routes_traffics_turns = os.path.join(accessbility_fd, title_name+"_Routes_TrafficsTurns")
     arcpy.management.CopyFeatures(route_joined_fc, routes_traffics_turns)
 ```
+<br>
+
+**5. Generate Summary Statistics**<br><br>
+&nbsp;&nbsp;&nbsp;*1) Create summary statistics by each markets*<br>
+&nbsp;&nbsp;&nbsp; 
 <br>
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
