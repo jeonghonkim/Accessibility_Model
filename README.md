@@ -34,7 +34,6 @@ buffers and routes, to the current map in a project, and the markets and routes 
    - [X] Created new definitions to count number of turn right and left
    - [X] Added the outputs to the current map and rendered the layers[^]
 
-
 <br><br>
 
 
