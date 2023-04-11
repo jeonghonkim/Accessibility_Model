@@ -19,7 +19,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 > **Updates** <br>
 
 * Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
-   - [X] Created a point feature layers with a csv file with lat, long values[^1]
+   - [X] Created a point feature layer with a csv file with lat, long values[^1]
    - [X] Created a buffer with a customized distance and linear unit[^2]
    - [X] Added workspace as a parameter for different environment settings[^3]
    - [X] Created routes with ClosestFacility in na module[^4]
@@ -344,11 +344,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
     arcpy.management.CopyFeatures(market_joined_fc, market_summary)
 
 ```
-[^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
-[^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
+[^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
+[^2]: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/analysis/buffer.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
-[^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
+[^4]: 
 [^5]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-closest-facility-analysis-layer.htm
 [^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
 [^7]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
 [^8]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
+[^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^10]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
