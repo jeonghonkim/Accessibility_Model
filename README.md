@@ -21,8 +21,8 @@ buffers and routes, to the current map in a project, and the markets and routes 
 * Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
    - [X] Created a point feature layers with a csv file with lat, long values[^1]
    - [X] Created a buffer with a customized distance and linear unit[^2]
-   - [X] Created routes with ClosestFacility in na module[^3]
-   - [X] Captured traffics by routes with closest spatial-join
+   - [X] Added workspace as a parameter for different environment settings[^3]
+   - [X] Created routes with ClosestFacility in na module[^4]
 
 * Ver.2 &nbsp;|&nbsp; December 2022 <br>
    - [X] Created new fields for accessibility score and traffic decays
@@ -344,7 +344,6 @@ buffers and routes, to the current map in a project, and the markets and routes 
     arcpy.management.CopyFeatures(market_joined_fc, market_summary)
 
 ```
-
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
