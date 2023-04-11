@@ -25,12 +25,13 @@ buffers and routes, to the current map in a project, and the markets and routes 
    - [X] Created routes with ClosestFacility in na module[^4]
 
 * Ver.2 &nbsp;|&nbsp; December 2022 <br>
-   - [X] Created new fields for accessibility score and traffic decays
-   - [X] Captured traffics by routes with closest spatial-join
+   - [X] Added the messages after each steps[^5]
+   - [X] Captured traffics by routes with closest spatial-join[^6]
+   - [X] Created new fields for accessibility score and traffic decays[^7]
 
 * Ver.3 &nbsp;|&nbsp; March 2023 <br>
+   - [x] Added title name parameters to save outputs in different feature datasets[^8]
    - [x] Created directions with Closest Facility nax module, instead of na module[^]
-   - [x] Added title name parameters to save outputs in different feature datasets[^]
    - [X] Created new definitions to count number of turn right and left
    - [X] Added the outputs to the current map and rendered the layers[^]
 
@@ -347,10 +348,14 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
 [^2]: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/analysis/buffer.htm
 [^3]: https://pro.arcgis.com/en/pro-app/2.8/arcpy/functions/getparameterastext.htm
-[^4]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
-[^5]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-closest-facility-analysis-layer.htm
-[^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
-[^7]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
-[^8]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
+[^4]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-closest-facility-analysis-layer.htm
+[^5]: https://pro.arcgis.com/en/pro-app/2.8/arcpy/functions/addmessage.htm
+[^6]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/spatial-join.htm
+[^7]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/add-fields.htm
+
+[^8]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
 [^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
-[^10]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
+[^10]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
+[^11]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^12]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
+[^13]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
