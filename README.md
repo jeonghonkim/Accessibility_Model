@@ -312,7 +312,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **5. Generate Summary Statistics**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Create summary statistics by each markets*<br>
-&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp; You can create the 
 <br><br>
 
 ```python
@@ -326,6 +326,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
     field_trafficD = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Traffic_Decays*")][0]
     field_trafficS = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Traffic_Scores*")][0]
     field_case = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*FacilityOID*")][0]
+    
     # Create summary statistics table
     access_summary_table = os.path.join(workspace, title_name+"_AccessSummary_Table")
     statistic_fields = [[field_mile, "MEAN"], [field_mile, "MAX"], [field_mile, "MIN"], [field_mile, "RANGE"], [field_mile, "STD"],
