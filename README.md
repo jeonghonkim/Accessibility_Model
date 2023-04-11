@@ -346,11 +346,11 @@ buffers and routes, to the current map in a project, and the markets and routes 
 ```
 [^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
 [^2]: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/analysis/buffer.htm
-[^3]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
-[^4]: 
+[^3]: https://pro.arcgis.com/en/pro-app/2.8/arcpy/functions/getparameterastext.htm
+[^4]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^5]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/network-analyst/make-closest-facility-analysis-layer.htm
 [^6]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
 [^7]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
 [^8]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
-[^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
+[^9]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^10]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
