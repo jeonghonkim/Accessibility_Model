@@ -313,7 +313,28 @@ buffers and routes, to the current map in a project, and the markets and routes 
 **5. Generate Summary Statistics**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Create summary statistics by each markets*<br>
 &nbsp;&nbsp;&nbsp; 
-<br>
+<br><br>
+
+```python
+    # 5. Generate summary statistics
+    # 1) Get the field names and create summary statistics table by markets
+    # Generate summary statistics
+    access_summary_table = os.path.join(workspace, title_name+"_AccessSummary_Table")
+    field_mile = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Total_Miles*")][0]
+    field_minute = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Total_Minutes*")][0]
+    field_right = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Turn_Right*")][0]
+    field_left = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Turn_Left*")][0]
+    field_traffic = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*Traffic_Decays*")][0]
+    field_case = [f.name for f in arcpy.ListFields(routes_traffics_turns, "*FacilityOID*")][0]
+    statistic_fields = [[field_mile, "MEAN"], [field_mile, "MAX"], [field_mile, "MIN"], [field_mile, "RANGE"], [field_mile, "STD"],
+                        [field_minute, "MEAN"], [field_minute, "MAX"], [field_minute, "MIN"], [field_minute, "RANGE"], [field_minute, "STD"],
+                        [field_right, "MEAN"], [field_right, "MAX"], [field_right, "MIN"], [field_right, "RANGE"], [field_right, "STD"],
+                        [field_left, "MEAN"], [field_left, "MAX"], [field_left, "MIN"], [field_left, "RANGE"], [field_left, "STD"],
+                        [field_traffic, "SUM"]]
+    case_field = field_case
+    arcpy.analysis.Statistics(routes_traffics_turns, access_summary_table, statistic_fields, case_field)
+ 
+```
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/closestfacility.htm
 [^2]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/create-feature-dataset.htm
