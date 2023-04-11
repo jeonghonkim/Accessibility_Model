@@ -1,4 +1,4 @@
-# Accessibility_Model
+c# Accessibility_Model
 
 <br />`Accessibility Model Ver.3`
 <br />Completed as of March 21, 2023
@@ -18,20 +18,21 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 > **Updates** <br>
 
-* Ver.3 &nbsp;|&nbsp; March 2023 <br>
-   - [x] Created directions with Closest Facility nax module, instead of na module[^1]
-   - [x] Added title name parameters to save outputs in different feature datasets[^2]
-   - [X] Created new definitions to count number of turn right and left
-   - [X] Added the outputs to the current map and rendered the layers[^3]
+* Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
+   - [X] Created a point feature layers with a csv file with lat, long values[^1]
+   - [X] Created a buffer with a customized distance and linear unit[^2]
+   - [X] Created routes with ClosestFacility in na module[^3]
+   - [X] Captured traffics by routes with closest spatial-join
 
 * Ver.2 &nbsp;|&nbsp; December 2022 <br>
    - [X] Created new fields for accessibility score and traffic decays
    - [X] Captured traffics by routes with closest spatial-join
 
-* Ver.1 &nbsp;|&nbsp; May - August 2022 <br>
-   - [X] Created a point feature layers with a csv file with lat, long values[^4]
-   - [X] Created routes with ClosestFacility in na module[^5]
-   - [X] Captured traffics by routes with closest spatial-join
+* Ver.3 &nbsp;|&nbsp; March 2023 <br>
+   - [x] Created directions with Closest Facility nax module, instead of na module[^]
+   - [x] Added title name parameters to save outputs in different feature datasets[^]
+   - [X] Created new definitions to count number of turn right and left
+   - [X] Added the outputs to the current map and rendered the layers[^]
 
 
 <br><br>
