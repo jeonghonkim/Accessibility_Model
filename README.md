@@ -344,8 +344,19 @@ buffers and routes, to the current map in a project, and the markets and routes 
     market_summary = os.path.join(accessbility_fd, title_name+"_Markets_Summary")
     market_joined_fc = arcpy.management.AddJoin(market_p, "OBJECTID", access_summary_table, field_case, "KEEP_ALL")
     arcpy.management.CopyFeatures(market_joined_fc, market_summary)
-
 ```
+<br><br>
+
+
+> **Additional Notes** <br>
+
+
+<br>**1. Create analysis objects** <br><br>
+&nbsp;&nbsp;&nbsp;*1)*
+
+
+
+
 [^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
 [^2]: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/analysis/buffer.htm
 [^3]: https://pro.arcgis.com/en/pro-app/2.8/arcpy/functions/getparameterastext.htm
