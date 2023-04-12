@@ -201,7 +201,7 @@ buffers and routes, to the current map in a project, and the markets and routes 
 
 **4. Calculate number of turns by routes**<br><br>
 &nbsp;&nbsp;&nbsp;*1) Convert feature class table to datframe in pandas*<br>
-&nbsp;&nbsp;&nbsp; There are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^7] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^8].<br><br>
+&nbsp;&nbsp;&nbsp; There are several steps you need to convert feature class table to dataframe in pandas. Arcpy supports TableToNumPyArray in da module[^13] and it works for only gdb tables, not for feature class tables. Therefore, the first step is to transform feature class table to gdb table, and TableToNumPyArray can be used to import it into dataframe. The follwing codes show two feature class, which were routes and directions, are changed to dataframes. Also, please reference the following link sharing the functions to convert feature tables to dataframes[^14].<br><br>
 &nbsp;&nbsp;&nbsp;*2) Create functions to count turns by each route*<br>
 &nbsp;&nbsp;&nbsp; The number of turn right and left can be calculated from the directino dataframe. Since directinot dataframe does not have a route id column, it needs to be created. Although it can be achieved by many different ways, we are going to use Type column in this analysis. The direction table's order is organized by the route id and 18 indicates the start of each route. By using the features, we can get incremental values in the route id column. <br>
 &nbsp;&nbsp;&nbsp; Once we differentiate route ids, functions to count turn right and left need to be created. There are three types of sentences indicating turns in the direction dataframe, which were 'turn left/right', 'bear left/right', and 'sharp left/right'. The first two types need to be differentiated by upper and lower characeters since they can be located in the start of the sentence. Also, there are sentences indicating turn two times. For the left turn, there are two types, which are 'U-turn' and 'Turn left, then turn left'. There is only one type for the right, which is 'Turn right, then turn right'. You can achieve 2 turns without interruptions by covering if you use the 2 turns fuctions after you apply the 1 turn function.<br><br>
@@ -358,7 +358,5 @@ buffers and routes, to the current map in a project, and the markets and routes 
 [^10]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/map-class.htm
 [^11]: https://pro.arcgis.com/en/pro-app/latest/arcpy/mapping/simplerenderer-class.htm
 [^12]: https://pro.arcgis.com/en/pro-app/latest/arcpy/network-analyst/choosing-between-the-two-modules-arcpy-nax-versus-arcpy-na-.htm
-
-
-[^12]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
-[^13]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm
+[^13]: https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/what-is-the-data-access-module-.htm](https://pro.arcgis.com/en/pro-app/latest/arcpy/data-access/tabletonumpyarray.htm
+[^14]: https://gist.github.com/d-wasserman/e9c98be1d0caebc2935afecf0ba239a0
