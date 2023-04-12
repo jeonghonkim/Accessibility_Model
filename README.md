@@ -344,12 +344,9 @@ This arcpy tool allows users to calculate drive times, miles, number of turn rig
 
 > **Additional Notes** <br>
 
+Please reference the attached jupyter notebooks, which 
 
-<br>**1. Create analysis objects** <br><br>
-&nbsp;&nbsp;&nbsp;*1)*
-
-
-
+<br>
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm
 [^2]: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/analysis/buffer.htm
