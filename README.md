@@ -344,7 +344,7 @@ This arcpy tool allows users to calculate drive times, miles, number of turn rig
 
 > **Additional Notes** <br>
 
-Please reference the attached jupyter notebooks, which 
+Please reference the attached jupyter notebooks so that 
 
 <br>
 
