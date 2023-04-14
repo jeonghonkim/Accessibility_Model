@@ -1,6 +1,7 @@
 # Accessibility_Model
 
 <br />`Accessibility Model Ver.3`
+<br />Author: Jeong Hoon Kim
 <br />Completed as of March 21, 2023
 <br><br>
 
